@@ -2,1285 +2,638 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
-  <title>Creovata Technologies — Next-Gen AI & Data Engineering</title>
-  <meta name="description"
-    content="Creovata Technologies — Enterprise AI solutions, computer vision automation, and advanced data engineering solutions." />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link
-    href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap"
-    rel="stylesheet" />
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-
-  <style>
-    /* ═══════════════════════════════════════════
-   PREMIUM DARK DESIGN SYSTEM
-═══════════════════════════════════════════ */
-    :root {
-      --bg-dark: #030712;
-      --bg-card: #0B132B;
-      --bg-card-h: #111C3A;
-      --text-main: #F9FAFB;
-      --text-muted: #9CA3AF;
-      --text-dark: #6B7280;
-      --accent-cyan: #06B6D4;
-      --accent-blue: #3B82F6;
-      --accent-glow: rgba(6, 182, 212, 0.15);
-      --border-line: rgba(255, 255, 255, 0.06);
-      --border-glow: rgba(6, 182, 212, 0.3);
-      --font-sans: 'Plus Jakarta Sans', system-ui, sans-serif;
-      --font-mono: 'JetBrains Mono', monospace;
-      --ease: cubic-bezier(0.16, 1, 0.3, 1);
-    }
-
-    *,
-    *::before,
-    *::after {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    html {
-      scroll-behavior: smooth;
-      font-size: 16px;
-      background: var(--bg-dark);
-    }
-
-    body {
-      background: var(--bg-dark);
-      color: var(--text-main);
-      font-family: var(--font-sans);
-      overflow-x: hidden;
-      -webkit-font-smoothing: antialiased;
-    }
-
-    /* Custom Sleek Scrollbar */
-    ::-webkit-scrollbar {
-      width: 6px;
-    }
-
-    ::-webkit-scrollbar-track {
-      background: var(--bg-dark);
-    }
-
-    ::-webkit-scrollbar-thumb {
-      background: #1F2937;
-      border-radius: 3px;
-    }
-
-    ::-webkit-scrollbar-thumb:hover {
-      background: var(--accent-cyan);
-    }
-
-    img {
-      max-width: 100%;
-      display: block;
-    }
-
-    a {
-      text-decoration: none;
-      color: inherit;
-    }
-
-    /* ─── APP-LIKE GLOW BACKGROUNDS ─── */
-    .glow-bg {
-      position: absolute;
-      width: 600px;
-      height: 600px;
-      background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
-      top: -10%;
-      right: -10%;
-      z-index: 1;
-      pointer-events: none;
-    }
-
-    /* ─── NAVBAR ─── */
-    .nav {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      z-index: 1000;
-      padding: 0 48px;
-      height: 72px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      background: rgba(3, 7, 18, 0.7);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      border-bottom: 1px solid var(--border-line);
-    }
-
-    .nav-logo {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .nav-logo text {
-      font-family: var(--font-sans);
-      font-weight: 800;
-      letter-spacing: -0.03em;
-    }
-
-    .nav-links {
-      display: flex;
-      gap: 32px;
-      list-style: none;
-    }
-
-    .nav-links a {
-      font-size: 0.875rem;
-      font-weight: 500;
-      color: var(--text-muted);
-      transition: color 0.2s var(--ease);
-    }
-
-    .nav-links a:hover {
-      color: var(--accent-cyan);
-    }
-
-    .nav-btn {
-      padding: 10px 20px;
-      border-radius: 8px;
-      background: linear-gradient(135deg, var(--accent-blue), var(--accent-cyan));
-      color: var(--bg-dark);
-      font-size: 0.875rem;
-      font-weight: 600;
-      box-shadow: 0 4px 20px rgba(6, 182, 212, 0.25);
-      transition: transform 0.2s var(--ease), box-shadow 0.2s;
-    }
-
-    .nav-btn:hover {
-      transform: translateY(-1px);
-      box-shadow: 0 6px 24px rgba(6, 182, 212, 0.4);
-    }
-
-    /* ─── HERO SECTION ─── */
-    .hero {
-      display: grid;
-      grid-template-columns: 1.2fr 0.8fr;
-      min-height: 100vh;
-      align-items: center;
-      position: relative;
-      padding-top: 72px;
-    }
-
-    .hero-left {
-      padding: 0 64px 0 72px;
-      position: relative;
-      z-index: 5;
-    }
-
-    .hero-right {
-      position: relative;
-      width: 100%;
-      height: 100%;
-      overflow: hidden;
-    }
-
-    #scene-canvas {
-      width: 100%;
-      height: 100%;
-      display: block;
-    }
-
-    .hero-eyebrow {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 6px 14px;
-      border-radius: 100px;
-      border: 1px solid var(--border-glow);
-      background: rgba(6, 182, 212, 0.05);
-      font-size: 0.75rem;
-      font-weight: 600;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--accent-cyan);
-      margin-bottom: 24px;
-    }
-
-    .eyebrow-dot {
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      background: var(--accent-cyan);
-      animation: pulse 2s infinite;
-    }
-
-    @keyframes pulse {
-      0% {
-        opacity: 0.4;
-      }
-
-      50% {
-        opacity: 1;
-      }
-
-      100% {
-        opacity: 0.4;
-      }
-    }
-
-    .hero-h1 {
-      font-size: clamp(2.8rem, 5vw, 5.5rem);
-      font-weight: 800;
-      line-height: 1.05;
-      letter-spacing: -0.04em;
-      color: var(--text-main);
-    }
-
-    .hero-h1 span.gradient {
-      background: linear-gradient(135deg, #FFF 30%, var(--accent-cyan) 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-
-    .hero-sub {
-      margin-top: 24px;
-      font-size: 1.1rem;
-      line-height: 1.65;
-      color: var(--text-muted);
-      max-width: 540px;
-    }
-
-    .hero-actions {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-      margin-top: 40px;
-    }
-
-    .btn {
-      padding: 14px 28px;
-      border-radius: 8px;
-      font-size: 0.95rem;
-      font-weight: 600;
-      transition: all 0.3s var(--ease);
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .btn-primary {
-      background: var(--text-main);
-      color: var(--bg-dark);
-    }
-
-    .btn-primary:hover {
-      background: #E5E7EB;
-      transform: translateY(-2px);
-    }
-
-    .btn-secondary {
-      background: transparent;
-      color: var(--text-main);
-      border: 1px solid var(--border-line);
-    }
-
-    .btn-secondary:hover {
-      background: rgba(255, 255, 255, 0.03);
-      border-color: var(--text-dark);
-      transform: translateY(-2px);
-    }
-
-    /* Stats Engine */
-    .hero-stats {
-      display: flex;
-      gap: 48px;
-      margin-top: 56px;
-      padding-top: 40px;
-      border-top: 1px solid var(--border-line);
-    }
-
-    .h-stat-num {
-      font-size: 2.2rem;
-      font-weight: 700;
-      color: var(--text-main);
-      letter-spacing: -0.02em;
-    }
-
-    .h-stat-num span {
-      color: var(--accent-cyan);
-    }
-
-    .h-stat-label {
-      font-size: 0.75rem;
-      font-weight: 600;
-      color: var(--text-dark);
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      margin-top: 4px;
-    }
-
-    /* ─── MARQUEE ─── */
-    .marquee-wrap {
-      overflow: hidden;
-      border-top: 1px solid var(--border-line);
-      border-bottom: 1px solid var(--border-line);
-      background: #050B18;
-    }
-
-    .marquee-inner {
-      display: flex;
-      animation: marquee 25s linear infinite;
-      width: max-content;
-    }
-
-    .m-item {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      padding: 16px 48px;
-      font-family: var(--font-mono);
-      font-size: 0.75rem;
-      color: var(--text-dark);
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
-    }
-
-    .m-dot {
-      width: 4px;
-      height: 4px;
-      border-radius: 50%;
-      background: var(--accent-cyan);
-    }
-
-    @keyframes marquee {
-      from {
-        transform: translateX(0);
-      }
-
-      to {
-        transform: translateX(-50%);
-      }
-    }
-
-    /* ─── SECTIONS COMMONS ─── */
-    section {
-      position: relative;
-      z-index: 2;
-    }
-
-    .container {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 48px;
-    }
-
-    .section-pad {
-      padding-top: 140px;
-      padding-bottom: 140px;
-    }
-
-    .section-label {
-      font-family: var(--font-mono);
-      font-size: 0.75rem;
-      font-weight: 600;
-      color: var(--accent-cyan);
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      margin-bottom: 16px;
-    }
-
-    .section-title {
-      font-size: clamp(2.2rem, 3.5vw, 3.2rem);
-      font-weight: 700;
-      letter-spacing: -0.03em;
-      line-height: 1.15;
-      color: var(--text-main);
-    }
-
-    .section-sub {
-      font-size: 1.05rem;
-      color: var(--text-muted);
-      line-height: 1.6;
-      max-width: 560px;
-      margin-top: 16px;
-    }
-
-    /* ─── GRID SYSTEMS (SERVICES & WORK) ─── */
-    .grid-3 {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 24px;
-      margin-top: 64px;
-    }
-
-    .grid-2 {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 24px;
-      margin-top: 64px;
-    }
-
-    .card-premium {
-      background: var(--bg-card);
-      border: 1px solid var(--border-line);
-      border-radius: 12px;
-      padding: 40px;
-      position: relative;
-      transition: all 0.4s var(--ease);
-    }
-
-    .card-premium:hover {
-      background: var(--bg-card-h);
-      border-color: var(--border-glow);
-      box-shadow: 0 12px 40px rgba(6, 182, 212, 0.08);
-      transform: translateY(-4px);
-    }
-
-    .card-premium .icon {
-      font-size: 1.75rem;
-      color: var(--accent-cyan);
-      margin-bottom: 24px;
-    }
-
-    .card-premium h3 {
-      font-size: 1.25rem;
-      font-weight: 600;
-      letter-spacing: -0.01em;
-      margin-bottom: 12px;
-    }
-
-    .card-premium p {
-      font-size: 0.92rem;
-      color: var(--text-muted);
-      line-height: 1.6;
-    }
-
-    .span-2 {
-      grid-column: span 2;
-    }
-
-    /* ─── CASE STUDIES / PROJECTS ─── */
-    .proj-card {
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-    }
-
-    .proj-meta {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      margin-bottom: 20px;
-    }
-
-    .tag {
-      font-family: var(--font-mono);
-      font-size: 0.68rem;
-      color: var(--accent-cyan);
-      background: rgba(6, 182, 212, 0.06);
-      padding: 4px 10px;
-      border-radius: 4px;
-      border: 1px solid rgba(6, 182, 212, 0.15);
-    }
-
-    .proj-tech-row {
-      display: flex;
-      gap: 8px;
-      margin-top: 28px;
-      flex-wrap: wrap;
-    }
-
-    .tech-pill {
-      font-family: var(--font-mono);
-      font-size: 0.7rem;
-      color: var(--text-muted);
-      background: rgba(255, 255, 255, 0.03);
-      padding: 4px 10px;
-      border-radius: 4px;
-      border: 1px solid var(--border-line);
-    }
-
-    /* Visual Simulator inside Project card */
-    .visual-sim {
-      background: #030712;
-      border: 1px solid var(--border-line);
-      border-radius: 8px;
-      padding: 20px;
-      margin-top: 24px;
-      font-family: var(--font-mono);
-      font-size: 0.75rem;
-      color: #34D399;
-    }
-
-    .sim-header {
-      display: flex;
-      justify-content: space-between;
-      color: var(--text-dark);
-      margin-bottom: 12px;
-      font-size: 0.65rem;
-    }
-
-    /* ─── TIMELINE SECTION (INTERNSHIP) ─── */
-    .timeline-layout {
-      display: grid;
-      grid-template-columns: 0.9fr 1.1fr;
-      gap: 64px;
-      margin-top: 64px;
-    }
-
-    .timeline-track {
-      position: relative;
-      padding-left: 32px;
-    }
-
-    .timeline-track::before {
-      content: '';
-      position: absolute;
-      left: 0;
-      top: 8px;
-      bottom: 8px;
-      width: 1px;
-      background: var(--border-line);
-    }
-
-    .tl-node {
-      position: relative;
-      margin-bottom: 48px;
-    }
-
-    .tl-node::before {
-      content: '';
-      position: absolute;
-      left: -36px;
-      top: 4px;
-      width: 9px;
-      height: 9px;
-      border-radius: 50%;
-      background: var(--bg-dark);
-      border: 2px solid var(--accent-cyan);
-    }
-
-    .tl-phase {
-      font-family: var(--font-mono);
-      font-size: 0.68rem;
-      color: var(--accent-cyan);
-      text-transform: uppercase;
-    }
-
-    .tl-node h4 {
-      font-size: 1.1rem;
-      font-weight: 600;
-      margin: 6px 0 8px;
-    }
-
-    .tl-node p {
-      font-size: 0.9rem;
-      color: var(--text-muted);
-      line-height: 1.5;
-    }
-
-    /* ─── REVIEW CARDS SLIDER ─── */
-    .test-outer {
-      overflow: hidden;
-      margin-top: 56px;
-      -webkit-mask: linear-gradient(90deg, transparent, #000 15%, #000 85%, transparent);
-      mask: linear-gradient(90deg, transparent, #000 15%, #000 85%, transparent);
-    }
-
-    .test-track {
-      display: flex;
-      gap: 20px;
-      animation: marquee 35s linear infinite;
-      width: max-content;
-    }
-
-    .t-card {
-      width: 360px;
-      background: var(--bg-card);
-      border: 1px solid var(--border-line);
-      border-radius: 12px;
-      padding: 32px;
-    }
-
-    .t-quote {
-      font-size: 0.92rem;
-      color: var(--text-muted);
-      line-height: 1.6;
-      margin-bottom: 24px;
-      font-style: italic;
-    }
-
-    .t-author {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .t-avatar {
-      width: 36px;
-      height: 36px;
-      border-radius: 50%;
-      background: #1F2937;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 700;
-      font-size: 0.75rem;
-      color: var(--accent-cyan);
-    }
-
-    .t-name {
-      font-size: 0.88rem;
-      font-weight: 600;
-    }
-
-    .t-role {
-      font-size: 0.75rem;
-      color: var(--text-dark);
-    }
-
-    /* ─── THE EDGE CTA ─── */
-    .cta-banner {
-      background: radial-gradient(ellipse at center, var(--bg-card-h) 0%, var(--bg-dark) 100%);
-      border: 1px solid var(--border-line);
-      border-radius: 16px;
-      padding: 80px 40px;
-      text-align: center;
-      margin-top: 80px;
-      position: relative;
-      overflow: hidden;
-    }
-
-    /* ─── CONTACT INFRASTRUCTURE ─── */
-    .contact-grid {
-      display: grid;
-      grid-template-columns: 0.9fr 1.1fr;
-      gap: 80px;
-      margin-top: 64px;
-    }
-
-    .c-row {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-      margin-bottom: 24px;
-    }
-
-    .c-icon {
-      width: 44px;
-      height: 44px;
-      border-radius: 8px;
-      background: var(--bg-card);
-      border: 1px solid var(--border-line);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: var(--accent-cyan);
-    }
-
-    .c-meta label {
-      font-family: var(--font-mono);
-      font-size: 0.65rem;
-      color: var(--text-dark);
-      text-transform: uppercase;
-    }
-
-    .c-meta p {
-      font-size: 0.95rem;
-      font-weight: 500;
-      margin-top: 2px;
-    }
-
-    /* Form Elements */
-    .input-frame {
-      margin-bottom: 20px;
-    }
-
-    .input-frame label {
-      display: block;
-      font-family: var(--font-mono);
-      font-size: 0.7rem;
-      color: var(--text-muted);
-      text-transform: uppercase;
-      margin-bottom: 8px;
-      letter-spacing: 0.05em;
-    }
-
-    .input-frame input,
-    .input-frame textarea,
-    .input-frame select {
-      width: 100%;
-      background: var(--bg-card);
-      border: 1px solid var(--border-line);
-      border-radius: 6px;
-      padding: 14px 16px;
-      color: var(--text-main);
-      font-family: var(--font-sans);
-      font-size: 0.92rem;
-      outline: none;
-      transition: border-color 0.2s;
-    }
-
-    .input-frame input:focus,
-    .input-frame textarea:focus,
-    .input-frame select:focus {
-      border-color: var(--accent-cyan);
-    }
-
-    .form-submit {
-      width: 100%;
-      padding: 16px;
-      background: var(--text-main);
-      color: var(--bg-dark);
-      border-radius: 6px;
-      font-weight: 600;
-      border: none;
-      cursor: pointer;
-      transition: background 0.2s;
-    }
-
-    .form-submit:hover {
-      background: #E5E7EB;
-    }
-
-    /* ─── FOOTER ─── */
-    footer {
-      border-top: 1px solid var(--border-line);
-      background: #02050D;
-      padding: 64px 0 32px;
-      font-size: 0.85rem;
-      color: var(--text-dark);
-    }
-
-    .footer-cols {
-      display: grid;
-      grid-template-columns: 2fr repeat(3, 1fr);
-      gap: 48px;
-      margin-bottom: 48px;
-    }
-
-    .footer-brand p {
-      color: var(--text-muted);
-      margin-top: 16px;
-      max-width: 300px;
-      line-height: 1.6;
-    }
-
-    .footer-col h5 {
-      font-family: var(--font-mono);
-      font-size: 0.7rem;
-      color: var(--text-main);
-      text-transform: uppercase;
-      margin-bottom: 16px;
-      letter-spacing: 0.05em;
-    }
-
-    .footer-col ul {
-      list-style: none;
-    }
-
-    .footer-col ul li {
-      margin-bottom: 10px;
-    }
-
-    .footer-col ul a:hover {
-      color: var(--accent-cyan);
-    }
-
-    .footer-base {
-      display: flex;
-      justify-content: space-between;
-      border-top: 1px solid var(--border-line);
-      padding-top: 24px;
-    }
-
-    /* RESPONSIVE ADAPTATION */
-    @media(max-width: 1024px) {
-      .hero {
-        grid-template-columns: 1fr;
-        text-align: center;
-        padding-bottom: 60px;
-      }
-
-      .hero-left {
-        padding: 40px 24px;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-      }
-
-      .hero-sub {
-        max-width: 100%;
-      }
-
-      .hero-actions,
-      .hero-stats {
-        justify-content: center;
-      }
-
-      .hero-right {
-        height: 400px;
-      }
-
-      .grid-3,
-      .grid-2 {
-        grid-template-columns: 1fr;
-      }
-
-      .span-2 {
-        grid-column: span 1;
-      }
-
-      .timeline-layout,
-      .contact-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .footer-cols {
-        grid-template-columns: 1fr 1fr;
-      }
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meer Mohammad Soomro | Professional Video Editor</title>
+    <meta name="description"
+        content="Professional Video Editor portfolio showcasing commercial, promotional, UGC, VSL, and social media video editing projects.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Modern CSS Variables & Reset */
+        :root {
+            --bg-dark: #0b0c10;
+            --bg-darker: #060709;
+            --card-bg: rgba(22, 26, 34, 0.6);
+            --accent-teal: #66fcf1;
+            --accent-glow: rgba(102, 252, 241, 0.15);
+            --accent-purple: #a855f7;
+            --text-primary: #f3f4f6;
+            --text-secondary: #9ca3af;
+            --border-color: rgba(255, 255, 255, 0.08);
+            --border-hover: rgba(102, 252, 241, 0.3);
+            --transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-darker);
+            background-image:
+                radial-gradient(circle at 10% 20%, rgba(102, 252, 241, 0.04) 0%, transparent 50%),
+                radial-gradient(circle at 90% 80%, rgba(168, 85, 247, 0.04) 0%, transparent 50%);
+            color: var(--text-primary);
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--bg-darker);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #1f2937;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--accent-teal);
+        }
+
+        /* Navigation Bar - Glassmorphism */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: rgba(6, 7, 9, 0.8);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border-color);
+            z-index: 1000;
+            transition: var(--transition);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.25rem 2rem;
+        }
+
+        .logo {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #fff;
+            background: linear-gradient(135deg, #fff 0%, var(--accent-teal) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -0.5px;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            transition: var(--transition);
+            position: relative;
+            padding: 0.25rem 0;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--accent-teal);
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-teal);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Main Layout Wrapper */
+        main {
+            max-width: 1200px;
+            margin: 100px auto 0 auto;
+            padding: 2rem;
+        }
+
+        /* Hero / Profile Section */
+        #hero {
+            text-align: center;
+            padding: 4rem 1rem 3.5rem 1rem;
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 3.5rem;
+            position: relative;
+        }
+
+        .profile-img-container {
+            position: relative;
+            width: 160px;
+            height: 160px;
+            margin: 0 auto 1.75rem auto;
+        }
+
+        .profile-img-glow {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent-teal), var(--accent-purple));
+            filter: blur(15px);
+            opacity: 0.35;
+            z-index: 1;
+            transition: var(--transition);
+        }
+
+        .profile-img {
+            position: relative;
+            z-index: 2;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+            object-position: center 12%;
+            border: 3.5px solid transparent;
+            background-image: linear-gradient(var(--bg-darker), var(--bg-darker)), linear-gradient(135deg, var(--accent-teal), var(--accent-purple));
+            background-origin: border-box;
+            background-clip: content-box, border-box;
+            transition: var(--transition);
+        }
+
+        #hero:hover .profile-img {
+            transform: scale(1.05) rotate(2deg);
+        }
+
+        #hero:hover .profile-img-glow {
+            transform: scale(1.1);
+            opacity: 0.5;
+        }
+
+        #hero h1 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 3rem;
+            font-weight: 800;
+            color: #fff;
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.5px;
+        }
+
+        #hero h2.subtitle {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.4rem;
+            font-weight: 500;
+            background: linear-gradient(135deg, var(--accent-teal) 0%, var(--accent-purple) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1.5rem;
+        }
+
+        .bio {
+            max-width: 680px;
+            margin: 0 auto 2.5rem auto;
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            font-weight: 400;
+        }
+
+        /* Software Icons Grid */
+        .software-badges {
+            display: flex;
+            justify-content: center;
+            gap: 1.25rem;
+            flex-wrap: wrap;
+        }
+
+        .software-badges img {
+            width: 50px;
+            height: 50px;
+            transition: var(--transition);
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border-color);
+            padding: 8px;
+            border-radius: 12px;
+            backdrop-filter: blur(5px);
+        }
+
+        .software-badges img:hover {
+            transform: translateY(-5px) scale(1.08);
+            border-color: var(--border-hover);
+            box-shadow: 0 8px 20px rgba(102, 252, 241, 0.15);
+            background: rgba(255, 255, 255, 0.06);
+        }
+
+        /* Portfolio Sections */
+        .portfolio-section {
+            margin-bottom: 5rem;
+            scroll-margin-top: 100px;
+        }
+
+        .section-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: #fff;
+            position: relative;
+            padding-left: 1rem;
+            margin-bottom: 2.5rem;
+            display: inline-block;
+        }
+
+        .section-title::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 15%;
+            height: 70%;
+            width: 4px;
+            background: linear-gradient(to bottom, var(--accent-teal), var(--accent-purple));
+            border-radius: 2px;
+        }
+
+        /* Video Project Grid Setup */
+        .project-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: 2.25rem;
+        }
+
+        .project-grid.vertical-grid {
+            grid-template-columns: repeat(auto-fit, minmax(245px, 1fr));
+        }
+
+        .project-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            transition: var(--transition);
+        }
+
+        .project-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--border-hover);
+            box-shadow:
+                0 15px 30px rgba(0, 0, 0, 0.4),
+                0 0 20px rgba(102, 252, 241, 0.08);
+        }
+
+        /* Video Container (16:9 Aspect Ratio Setup) */
+        .video-container {
+            position: relative;
+            width: 100%;
+            padding-top: 56.25%;
+            /* 16:9 Aspect Ratio */
+            background-color: #000;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        /* Vertical Video Container (9:16 Aspect Ratio Setup) */
+        .video-container.vertical {
+            padding-top: 177.77%;
+            /* 9:16 Aspect Ratio for Shorts & Reels */
+        }
+
+        .video-container iframe,
+        .video-container video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .project-info {
+            padding: 1.5rem;
+        }
+
+        .project-info h4 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #fff;
+            margin-bottom: 0.5rem;
+            transition: var(--transition);
+        }
+
+        .project-card:hover .project-info h4 {
+            color: var(--accent-teal);
+        }
+
+        .project-info p {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+        }
+
+        /* Responsive Breakpoints */
+        @media (max-width: 768px) {
+            .nav-container {
+                flex-direction: column;
+                gap: 1.25rem;
+                padding: 1.25rem 1rem;
+            }
+
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 1rem;
+            }
+
+            .nav-links a {
+                font-size: 0.85rem;
+            }
+
+            main {
+                margin-top: 160px;
+                padding: 1.25rem;
+            }
+
+            #hero h1 {
+                font-size: 2.25rem;
+            }
+
+            #hero h2.subtitle {
+                font-size: 1.2rem;
+            }
+
+            .section-title {
+                font-size: 1.75rem;
+            }
+
+            .project-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+        }
+    </style>
 </head>
 
 <body>
 
-  <!-- ═══ NAVBAR ═══ -->
-  <nav class="nav">
-    <div class="nav-logo">
-      <svg viewBox="0 0 40 40" width="32" height="32">
-        <circle cx="20" cy="20" r="16" fill="none" stroke="url(#gradient-accent)" stroke-width="4" />
-        <defs>
-          <linearGradient id="gradient-accent" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stop-color="#3B82F6" />
-            <stop offset="100%" stop-color="#06B6D4" />
-          </linearGradient>
-        </defs>
-      </svg>
-      <svg viewBox="0 0 120 40" width="100" height="32">
-        <text x="0" y="26" font-size="20" font-weight="800" fill="#F9FAFB">creovata</text>
-      </svg>
-    </div>
-    <ul class="nav-links">
-      <li><a href="#services">Capabilities</a></li>
-      <li><a href="#projects">Systems</a></li>
-      <li><a href="#internship">Academy</a></li>
-      <li><a href="#contact">Infrastructure</a></li>
-    </ul>
-    <a href="#contact" class="nav-btn">Initialize Project</a>
-  </nav>
-
-  <!-- ═══ HERO ENGINE ═══ -->
-  <section class="hero">
-    <div class="glow-bg"></div>
-    <div class="hero-left">
-      <div class="hero-eyebrow">
-        <span class="eyebrow-dot"></span> Advanced Computing Core
-      </div>
-      <h1 class="hero-h1">
-        <span class="gradient">Engineering the AI & Data Layer</span>
-      </h1>
-      <p class="hero-sub">
-        Creovata Technologies builds high-throughput computer vision models, scalable production pipelines, and
-        automated intelligence frameworks for modern distributed systems.
-      </p>
-      <div class="hero-actions">
-        <a href="#services" class="btn btn-primary">Our Capabilities</a>
-        <a href="#projects" class="btn btn-secondary">System Portfolio</a>
-      </div>
-      <div class="hero-stats">
-        <div>
-          <div class="h-stat-num"><span class="counter" data-target="50">0</span>+</div>
-          <div class="h-stat-label">Deployments</div>
+    <nav>
+        <div class="nav-container">
+            <a href="#hero" class="logo">Meer Mohammad Soomro</a>
+            <ul class="nav-links">
+                <li><a href="#Ai-Videos">AI Videos</a></li>
+                <li><a href="#Commercial">Commercial</a></li>
+                <li><a href="#Promotional">Promotional</a></li>
+                <li><a href="#Ugc">UGC Edits</a></li>
+                <li><a href="#Vsl">VSL Edits</a></li>
+                <li><a href="#Product">Product Ads</a></li>
+                <li><a href="#Social">Reels & Shorts</a></li>
+            </ul>
         </div>
-        <div>
-          <div class="h-stat-num"><span class="counter" data-target="35">0</span>+</div>
-          <div class="h-stat-label">Enterprise Clients</div>
-        </div>
-        <div>
-          <div class="h-stat-num"><span class="counter" data-target="200">0</span>+</div>
-          <div class="h-stat-label">Engineers Mentored</div>
-        </div>
-      </div>
-    </div>
-    <div class="hero-right">
-      <canvas id="scene-canvas"></canvas>
-    </div>
-  </section>
+    </nav>
 
-  <!-- ═══ SYSTEM OVERVIEW MARQUEE ═══ -->
-  <div class="marquee-wrap">
-    <div class="marquee-inner">
-      <div class="m-item"><span class="m-dot"></span>Computer Vision</div>
-      <div class="m-item"><span class="m-dot"></span>Neural Architectures</div>
-      <div class="m-item"><span class="m-dot"></span>Data Pipelines</div>
-      <div class="m-item"><span class="m-dot"></span>Edge Automation</div>
-      <div class="m-item"><span class="m-dot"></span>Distributed Infrastructure</div>
-      <!-- Duplication for infinite loop seamlessly -->
-      <div class="m-item"><span class="m-dot"></span>Computer Vision</div>
-      <div class="m-item"><span class="m-dot"></span>Neural Architectures</div>
-      <div class="m-item"><span class="m-dot"></span>Data Pipelines</div>
-      <div class="m-item"><span class="m-dot"></span>Edge Automation</div>
-      <div class="m-item"><span class="m-dot"></span>Distributed Infrastructure</div>
-    </div>
-  </div>
+    <main>
 
-  <!-- ═══ CORE CAPABILITIES (SERVICES) ═══ -->
-  <section id="services" class="container section-pad">
-    <div>
-      <div class="section-label">Engineering Stack</div>
-      <h2 class="section-title">Production-grade infrastructure solutions</h2>
-      <p class="section-sub">We deploy specialized machine learning models and high-performance applications mapped to
-        client environments.</p>
-    </div>
-    <div class="grid-3">
-      <div class="card-premium">
-        <div class="icon">🧠</div>
-        <h3>Machine Learning Systems</h3>
-        <p>Custom NLP processors, continuous predictive infrastructure, and advanced recommendation matrices configured
-          for enterprise scale.</p>
-      </div>
-      <div class="card-premium">
-        <div class="icon">👁️</div>
-        <h3>Computer Vision Core</h3>
-        <p>Real-time edge device spatial analysis, deep target detection models, and robust multi-camera classification
-          engines.</p>
-      </div>
-      <div class="card-premium">
-        <div class="icon">📈</div>
-        <h3>Data Engineering Matrix</h3>
-        <p>High-speed stream warehousing architectures, multi-source analytical pipelines, and low-latency metrics
-          dashboards.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- ═══ SYSTEM WORKPLACE (PROJECTS) ═══ -->
-  <section id="projects"
-    style="background: #050B18; border-top: 1px solid var(--border-line); border-bottom: 1px solid var(--border-line);">
-    <div class="container section-pad">
-      <div>
-        <div class="section-label">System Deployments</div>
-        <h2 class="section-title">High-impact engineering paradigms</h2>
-      </div>
-      <div class="grid-2">
-        <div class="card-premium proj-card">
-          <div>
-            <div class="proj-meta"><span class="tag">Edge Intelligence</span></div>
-            <h3>Cleonix AI Solar Automation System</h3>
-            <p>An autonomous computer-vision cluster utilizing edge pipelines to continuously parse and classify solar
-              panel structural anomalies, optimizing array output overheads by up to 38% without physical operator
-              latency.</p>
-            <div class="visual-sim">
-              <div class="sim-header"><span>[YOLOv8_CORE_STREAMING]</span><span>LIVE_INF_HZ: 42.4</span></div>
-              <span style="color: #60A5FA;">&gt; TensorRT engine verified. Object localization active...</span><br />
-              <span style="color: #34D399;">&gt; [Panel_04] Dust Density: 84.2% -> Cleonix Signal Sent.</span>
+        <section id="hero">
+            <div class="profile-img-container">
+                <div class="profile-img-glow"></div>
+                <img src="profile.jpg" alt="Your Profile" class="profile-img">
             </div>
-          </div>
-          <div class="proj-tech-row">
-            <span class="tech-pill">Python</span><span class="tech-pill">YOLOv8</span><span
-              class="tech-pill">OpenCV</span><span class="tech-pill">ROS2</span>
-          </div>
-        </div>
-
-        <div class="card-premium proj-card">
-          <div>
-            <div class="proj-meta"><span class="tag">Security Core</span></div>
-            <h3>Cyber Sentinel Intelligence Pipeline</h3>
-            <p>An end-to-end linguistic threat analytics node operating on specialized NLP transformers to parse massive
-              behavioral telemetry matrices and expose zero-day threat patterns instantly inside Django secure panels.
+            <h1>Meer Mohammad Soomro</h1>
+            <h2 class="subtitle">Professional Video Editor</h2>
+            <p class="bio">
+                Hi, I'm Meer Mohammad Soomro a passionate Video Editor focused on turning raw footage into
+                high-performing marketing assets. I help businesses stand out and drive sales through high-converting
+                content
             </p>
-            <div class="visual-sim">
-              <div class="sim-header"><span>[NLP_SENTINEL_TRANSFORMER]</span><span>STATUS: ENFORCING</span></div>
-              <span style="color: #F87171;">&gt; Anomaly Vector detected on cluster_ref_X9</span><br />
-              <span style="color: #60A5FA;">&gt; Mitigating classification index via network routing table...</span>
+
+            <div class="software-badges">
+                <img title="Adobe Premiere Pro"
+                    src="https://www.adobe.com/cc-shared/assets/img/product-icons/svg/premiere-pro.svg" alt="Premiere">
+                <img title="Adobe After Effects"
+                    src="https://www.adobe.com/cc-shared/assets/img/product-icons/svg/after-effects-40.svg"
+                    alt="After Effects">
+                <img title="Final Cut Pro"
+                    src="https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/2d/09/0f/2d090f09-3be3-cfc4-cfd5-ec7c75df965e/AppIcon-85-220-0-4-2x-sRGB.png/230x0w.webp"
+                    alt="Final Cut">
+                <img title="CapCut"
+                    src="https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/fd/68/5d/fd685d32-fb2f-335b-eeb4-f58523b326fc/AppIcon.png/230x0w.webp"
+                    alt="CapCut">
             </div>
-          </div>
-          <div class="proj-tech-row">
-            <span class="tech-pill">Django</span><span class="tech-pill">PyTorch</span><span
-              class="tech-pill">FastAPI</span><span class="tech-pill">Redis</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
+            <section id="Ai-Videos" class="portfolio-section">
+                <h2 class="section-title">AI Avatar Videos</h2>
+                <div class="project-grid vertical-grid">
+                    <div class="project-card">
+                        <div class="video-container vertical">
+                            <iframe src="https://www.youtube.com/embed/dc8vbEX7AdU" allowfullscreen></iframe>
+                        </div>
+                        <div class="project-info">
+                            <h4>AI E-Commerce Ads</h4>
+                            <p>High-converting AI avatar spokesperson presenting dropshipping products.</p>
+                        </div>
+                    </div>
+                    <div class="project-card">
+                        <div class="video-container vertical">
+                            <iframe src="https://www.youtube.com/embed/xdI5GU9rD3E" allowfullscreen></iframe>
+                        </div>
+                        <div class="project-info">
+                            <h4>AI Product Spokesperson</h4>
+                            <p>Engaging promotional video explaining software benefits using dynamic AI avatars.</p>
+                        </div>
+                    </div>
+                    <div class="project-card">
+                        <div class="video-container vertical">
+                            <iframe src="https://www.youtube.com/embed/ctVpPTUeecY" allowfullscreen></iframe>
+                        </div>
+                        <div class="project-info">
+                            <h4>AI Brand Explainer</h4>
+                            <p>Social media advertisement showcasing online services with a photorealistic AI presenter.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="project-card">
+                        <div class="video-container vertical">
+                            <iframe src="https://www.youtube.com/embed/jc8DpDwXUZw" allowfullscreen></iframe>
+                        </div>
+                        <div class="project-info">
+                            <h4>AI Marketing Creative</h4>
+                            <p>High-impact Facebook & TikTok ad optimized for conversions and viewer retention.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
 
-  <!-- ═══ ACADEMY PROGRAM (INTERNSHIP) ═══ -->
-  <section id="internship" class="container section-pad">
-    <div class="timeline-layout">
-      <div>
-        <div class="section-label">Talent Incubator</div>
-        <h2 class="section-title">Creovata Engineering Academy</h2>
-        <p class="section-sub">A intense, rigorous 12-week development pipeline tracking modern architecture paths, live
-          client environments, and rigorous peer code reviews.</p>
+            <section id="Commercial" class="portfolio-section">
+                <h2 class="section-title">Commercial Projects</h2>
+                <div class="project-grid vertical-grid">
+                    <div class="project-card">
+                        <div class="video-container vertical">
+                            <iframe src="https://www.youtube.com/embed/NnAmDRjWWyU" allowfullscreen></iframe>
+                        </div>
+                        <div class="project-info">
+                            <h4>Brand Campaign Promo</h4>
+                            <p>High-converting commercial product advertisement designed for social feeds.</p>
+                        </div>
+                    </div>
+                    <div class="project-card">
+                        <div class="video-container vertical">
+                            <iframe src="https://www.youtube.com/embed/YSbjyVd7znQ" allowfullscreen></iframe>
+                        </div>
+                        <div class="project-info">
+                            <h4>Corporate Ad Creative</h4>
+                            <p>Engaging promotional video showcasing software benefits and service features.</p>
+                        </div>
+                    </div>
+                    <div class="project-card">
+                        <div class="video-container vertical">
+                            <iframe src="https://www.youtube.com/embed/xpi-GUq5ZlU" allowfullscreen></iframe>
+                        </div>
+                        <div class="project-info">
+                            <h4>Modern Marketing Hook</h4>
+                            <p>Dynamic commercial explainer optimized for viewer retention and conversions.</p>
+                        </div>
+                    </div>
+                    <div class="project-card">
+                        <div class="video-container vertical">
+                            <iframe src="https://www.youtube.com/embed/mZ7biHon48k" allowfullscreen></iframe>
+                        </div>
+                        <div class="project-info">
+                            <h4>E-Commerce Video Ad</h4>
+                            <p>High-impact product demonstration ad designed to drive sales and traffic.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
 
-        <div
-          style="background: var(--bg-card); border: 1px solid var(--border-line); border-radius: 8px; padding: 24px; margin-top: 32px; border-left: 3px solid var(--accent-cyan);">
-          <span font-family="var(--font-mono)"
-            style="font-size:0.75rem; color: var(--accent-cyan); font-weight:700;">REGISTRATION STATUS</span>
-          <h4 style="margin: 4px 0;">Next Cohort Sync Phase</h4>
-          <p style="font-size:0.85rem; color:var(--text-muted);">Applications processing open window for cohort starting
-            **August 2026**.</p>
-        </div>
-      </div>
-      <div class="timeline-track">
-        <div class="tl-node">
-          <span class="tl-phase">Phase 01 / Weeks 1–2</span>
-          <h4>Systems Architecture Foundations</h4>
-          <p>Command line virtualization, distributed version workflows (Git/GitHub), high-velocity integration
-            pipelines, and testing matrices implementation patterns.</p>
-        </div>
-        <div class="tl-node">
-          <span class="tl-phase">Phase 02 / Weeks 3–6</span>
-          <h4>Deep Skill Adaptation Track</h4>
-          <p>Specialized path splitting across core Machine Learning (TensorFlow/PyTorch/Vision pipelines) or resilient
-            Full-Stack Systems engineering (React, production API layers, database mapping).</p>
-        </div>
-        <div class="tl-node">
-          <span class="tl-phase">Phase 03 / Weeks 7–12</span>
-          <h4>Client Environment Injection</h4>
-          <p>Direct insertion into active development cycles. Building real updates for target platforms, presenting
-            final code capstones, and issuing validated technical certificates.</p>
-        </div>
-      </div>
-    </div>
-  </section>
+            <section id="Promotional" class="portfolio-section">
+                <h2 class="section-title">Promotional Videos</h2>
+                <div class="project-grid">
+                    <div class="project-card">
+                        <div class="video-container">
+                            <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" allowfullscreen></iframe>
+                        </div>
+                        <div class="project-info">
+                            <h4>Night Club Promotion</h4>
+                            <p>Creative Event Promotion for Night Club</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
 
-  <!-- ═══ CALL TO ACTION ENGINE ═══ -->
-  <section class="container" style="padding-bottom: 80px;">
-    <div class="cta-banner">
-      <h2 class="section-title">Initialize your technical framework with us</h2>
-      <p class="section-sub" style="margin: 16px auto 32px;">Connect with our systems consultants to map out
-        architectural requirements for your enterprise.</p>
-      <a href="#contact" class="btn btn-primary">Get In Touch</a>
-    </div>
-  </section>
+            <section id="Ugc" class="portfolio-section">
+                <h2 class="section-title">UGC Edits - User Generated Content</h2>
+                <div class="project-grid">
+                    <div class="project-card">
+                        <div class="video-container">
+                            <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" allowfullscreen></iframe>
+                        </div>
+                        <div class="project-info">
+                            <h4>Gleam Wand UGC Ad</h4>
+                            <p>Creative Gleam Wand UGC Ad</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
 
-  <!-- ═══ CONTACT MANAGEMENT LAYER ═══ -->
-  <section id="contact" style="border-top: 1px solid var(--border-line); background: #02050D;">
-    <div class="container section-pad">
-      <div class="contact-grid">
-        <div>
-          <div class="section-label">Connect Cluster</div>
-          <h2 class="section-title">Open an engineering ticket</h2>
-          <p class="section-sub" style="margin-bottom: 40px;">Our lead architecture desk reviews all incoming vectors
-            within one business loop.</p>
+            <section id="Vsl" class="portfolio-section">
+                <h2 class="section-title">VSL Edits - Video Sales Letter</h2>
+                <div class="project-grid">
+                    <div class="project-card">
+                        <div class="video-container">
+                            <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" allowfullscreen></iframe>
+                        </div>
+                        <div class="project-info">
+                            <h4>Real Estate Agent VSL Ad</h4>
+                            <p>Creative Real Estate Agent VSL Ad</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
 
-          <div class="c-row">
-            <div class="c-icon">✉️</div>
-            <div class="c-meta"><label>Secure Mail Routing</label>
-              <p>hello@creovata.com</p>
-            </div>
-          </div>
-          <div class="c-row">
-            <div class="c-icon">📍</div>
-            <div class="c-meta"><label>Corporate Operations Base</label>
-              <p>Karachi, Pakistan</p>
-            </div>
-          </div>
-        </div>
-        <div
-          style="background: var(--bg-card); border: 1px solid var(--border-line); padding: 48px; border-radius: 12px;">
-          <form id="contactForm">
-            <div class="input-frame">
-              <label>Identification / Name</label>
-              <input type="text" placeholder="e.g., Alex Mercer" required />
-            </div>
-            <div class="input-frame">
-              <label>Communication Endpoints / Email</label>
-              <input type="email" placeholder="e.g., alex@enterprise.com" required />
-            </div>
-            <div class="input-frame">
-              <label>Vector / Targeted Pipeline</label>
-              <select required>
-                <option value="">Choose capability channel...</option>
-                <option>Computer Vision Systems</option>
-                <option>Machine Learning Arrays</option>
-                <option>Full-Stack Distributed Build</option>
-                <option>Academy Cohort Request</option>
-              </select>
-            </div>
-            <div class="input-frame">
-              <label>System Requirements / Description</label>
-              <textarea rows="4" placeholder="Detail architecture scope, current dependencies, and milestone goals..."
-                required></textarea>
-            </div>
-            <button type="submit" class="form-submit">Dispatch Signal →</button>
-          </form>
-        </div>
-      </div>
-    </div>
-  </section>
+            <section id="Product" class="portfolio-section">
+                <h2 class="section-title">Product Short Ads</h2>
+                <div class="project-grid vertical-grid">
+                    <div class="project-card">
+                        <div class="video-container vertical">
+                            <iframe src="https://www.youtube.com/embed/fpwZLjGpYak" allowfullscreen></iframe>
+                        </div>
+                        <div class="project-info">
+                            <h4>Product Showcase 1</h4>
+                            <p>Engaging product features demonstration designed for social commerce.</p>
+                        </div>
+                    </div>
+                    <div class="project-card">
+                        <div class="video-container vertical">
+                            <iframe src="https://www.youtube.com/embed/xqZa97MvPm8" allowfullscreen></iframe>
+                        </div>
+                        <div class="project-info">
+                            <h4>Product Showcase 2</h4>
+                            <p>Dynamic product close-up highlight capturing core selling points.</p>
+                        </div>
+                    </div>
+                    <div class="project-card">
+                        <div class="video-container vertical">
+                            <iframe src="https://www.youtube.com/embed/ZWLvuDGtzyU" allowfullscreen></iframe>
+                        </div>
+                        <div class="project-info">
+                            <h4>Product Showcase 3</h4>
+                            <p>High-energy visual presentation showcasing real-world product usage.</p>
+                        </div>
+                    </div>
+                    <div class="project-card">
+                        <div class="video-container vertical">
+                            <iframe src="https://www.youtube.com/embed/NtInvwUyLDM" allowfullscreen></iframe>
+                        </div>
+                        <div class="project-info">
+                            <h4>Product Showcase 4</h4>
+                            <p>Conversion-optimized social media ad highlighting product benefits.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
 
-  <!-- ═══ FOOTER RESILIENCE LAYER ═══ -->
-  <footer>
-    <div class="container">
-      <div class="footer-cols">
-        <div class="footer-brand">
-          <h4 style="color: var(--text-main); font-weight:800; letter-spacing:-0.02em;">creovata</h4>
-          <p>Engineering robust analytical systems, advanced machine intelligence models, and performance digital
-            ecosystems.</p>
-        </div>
-        <div class="footer-col">
-          <h5>Capabilities</h5>
-          <ul>
-            <li><a href="#services">Machine Learning</a></li>
-            <li><a href="#services">Computer Vision</a></li>
-            <li><a href="#services">Data Architecture</a></li>
-          </ul>
-        </div>
-        <div class="footer-col">
-          <h5>Ecosystem</h5>
-          <ul>
-            <li><a href="#projects">Deployments</a></li>
-            <li><a href="#internship">Academy Track</a></li>
-            <li><a href="#contact">Infrastructure Hub</a></li>
-          </ul>
-        </div>
-        <div class="footer-col">
-          <h5>Operational Status</h5>
-          <p style="font-family: var(--font-mono); font-size: 0.75rem; color: #34D399;">● ALL SYSTEMS NOMINAL</p>
-        </div>
-      </div>
-      <div class="footer-base">
-        <p>© 2026 Creovata Technologies. All rights reserved.</p>
-        <p>Secure Node Layer System Configuration 4.2.1</p>
-      </div>
-    </div>
-  </footer>
+            <section id="Social" class="portfolio-section">
+                <h2 class="section-title">Shorts & Reels</h2>
+                <div class="project-grid">
+                    <div class="project-card">
+                        <div class="video-container">
+                            <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" allowfullscreen></iframe>
+                        </div>
+                        <div class="project-info">
+                            <h4>Olympic Short Reel</h4>
+                            <p>Engaging Olympic Short Reel</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
 
-  <script>
-    'use strict';
+    </main>
 
-    // ── THREE.JS AUTOMATED MATHEMATICAL PARTICLES GENERATOR ──
-    (function initScene() {
-      const container = document.querySelector('.hero-right');
-      const canvas = document.getElementById('scene-canvas');
-      if (!container || !canvas) return;
-
-      let W = container.clientWidth, H = container.clientHeight;
-      const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
-      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-      renderer.setSize(W, H);
-
-      const scene = new THREE.Scene();
-      const camera = new THREE.PerspectiveCamera(45, W / H, 0.1, 100);
-      camera.position.z = 6;
-
-      // Controlled Geometry Node
-      const count = 350;
-      const geometry = new THREE.BufferGeometry();
-      const positions = new Float32Array(count * 3);
-      const velocities = [];
-
-      for (let i = 0; i < count * 3; i += 3) {
-        positions[i] = (Math.random() - 0.5) * 4;
-        positions[i + 1] = (Math.random() - 0.5) * 4;
-        positions[i + 2] = (Math.random() - 0.5) * 4;
-        velocities.push({
-          x: (Math.random() - 0.5) * 0.002,
-          y: (Math.random() - 0.5) * 0.002,
-          z: (Math.random() - 0.5) * 0.002
-        });
-      }
-
-      geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-      const material = new THREE.PointsMaterial({
-        size: 0.035,
-        color: 0x06B6D4,
-        transparent: true,
-        opacity: 0.65
-      });
-
-      const particleSystem = new THREE.Points(geometry, material);
-      scene.add(particleSystem);
-
-      // Smooth Rescale Handling
-      const ro = new ResizeObserver(entries => {
-        for (let entry of entries) {
-          W = entry.contentRect.width || container.clientWidth;
-          H = entry.contentRect.height || container.clientHeight;
-          camera.aspect = W / H;
-          camera.updateProjectionMatrix();
-          renderer.setSize(W, H);
-        }
-      });
-      ro.observe(container);
-
-      // Infinite Animation Engine Tick
-      function animate() {
-        requestAnimationFrame(animate);
-        const positions = geometry.attributes.position.array;
-
-        for (let i = 0; i < count; i++) {
-          const i3 = i * 3;
-          positions[i3] += velocities[i].x;
-          positions[i3 + 1] += velocities[i].y;
-          positions[i3 + 2] += velocities[i].z;
-
-          // Boundary inversion check
-          if (Math.abs(positions[i3]) > 2) velocities[i].x *= -1;
-          if (Math.abs(positions[i3 + 1]) > 2) velocities[i].y *= -1;
-        }
-        geometry.attributes.position.needsUpdate = true;
-        particleSystem.rotation.y += 0.001;
-        renderer.render(scene, camera);
-      }
-      animate();
-    })();
-
-    // ── NUMERICAL DATA TICKER COUNTERS ──
-    document.addEventListener('DOMContentLoaded', () => {
-      const counters = document.querySelectorAll('.counter');
-      const observerOptions = { threshold: 0.5 };
-
-      const startCounting = (el) => {
-        const target = +el.getAttribute('data-target');
-        let current = 0;
-        const increment = target / 40;
-        const timer = setInterval(() => {
-          current += increment;
-          if (current >= target) {
-            el.textContent = target;
-            clearInterval(timer);
-          } else {
-            el.textContent = Math.floor(current);
-          }
-        }, 25);
-      };
-
-      const io = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            startCounting(entry.target);
-            io.unobserve(entry.target);
-          }
-        });
-      }, observerOptions);
-
-      counters.forEach(c => io.observe(c));
-    });
-
-    // ── FORM SUBMIT SIGNAL MAPPER ──
-    document.getElementById('contactForm').addEventListener('submit', function (e) {
-      e.preventDefault();
-      const btn = this.querySelector('.form-submit');
-      btn.textContent = 'TRANSMITTING ROUTE SYSTEM...';
-      btn.style.opacity = '0.6';
-      setTimeout(() => {
-        btn.textContent = '✓ TRANSMISSION LINK SECURED';
-        btn.style.background = '#10B981';
-        btn.style.color = '#FFF';
-        btn.style.opacity = '1';
-        setTimeout(() => {
-          btn.textContent = 'Dispatch Signal →';
-          btn.style.background = '';
-          btn.style.color = '';
-          this.reset();
-        }, 3000);
-      }, 1200);
-    });
-  </script>
 </body>
 
 </html>
